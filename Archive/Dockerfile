@@ -2,7 +2,7 @@ FROM nginx:latest
 
 WORKDIR /usr/share/nginx/html
 
-COPY index.html .
+COPY Website/ .
 
 EXPOSE 80
 
