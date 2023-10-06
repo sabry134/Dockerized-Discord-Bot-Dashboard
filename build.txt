@@ -1,3 +1,3 @@
-docker build -t my-website-image .
-docker run -d -p 80:80 my-website-image
+docker build -t docker-test-website .
+docker run -d -p 80:80 docker-test-website
 docker ps
