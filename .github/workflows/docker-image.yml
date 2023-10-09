@@ -27,4 +27,4 @@ jobs:
     - name: Start the Docker containers with docker-compose
       run: |
         docker-compose up -d
-      working-directory: ../
+      working-directory: /Dockerized-Website/docker-compose.yml
