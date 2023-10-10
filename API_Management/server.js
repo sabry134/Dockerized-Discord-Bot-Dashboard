@@ -25,6 +25,9 @@ app.post('/login', (req, res) => {
   const account = accounts.find((acc) => acc.username === username);
 
   if (account) {
+    console.log('Stored Password:', account.password);
+    console.log('Submitted Password:', password);
+
     if (account.password === password) {
       console.log('Login successful');
       res.status(200).json({ message: 'Login successful' });
@@ -37,6 +40,7 @@ app.post('/login', (req, res) => {
     res.status(401).json({ message: 'User not found' });
   }
 });
+
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);

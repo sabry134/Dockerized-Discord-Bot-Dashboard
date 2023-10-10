@@ -9,7 +9,7 @@ docker compose up -d
 For example when changing your .env passwords
 
 ```
-docker-compose up --build
+docker-compose build
 ```
 
 (Once it says "Server listening on port 3000", abort it and refer to the first command)
@@ -26,3 +26,10 @@ docker ps
 docker stop <container ID>
 docker rm <container ID>
 ```
+
+
+
+
+
+docker run -d -p 8080:80 my-react-app
+docker build -t my-react-app .
