@@ -8,3 +8,16 @@ services:
       - "80:80"
     volumes:
       - ./Basic_Website:/usr/share/nginx/html
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./API_Management:/app/API_Management
+
+  # Add other services as needed
+
+# Add network configurations, volumes, etc. here if necessary
