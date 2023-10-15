@@ -37,7 +37,7 @@ const Dashboard = () => {
           onClick={toggleBot}
           style={botIsRunning ? styles.discordButton : styles.discordButton}
         >
-          {botIsRunning ? 'Start Discord Bot' : 'Stop Discord Bot'}
+          {botIsRunning ? 'Stop Discord Bot' : 'Start Discord Bot'}
         </button>
       </div>
     </div>
