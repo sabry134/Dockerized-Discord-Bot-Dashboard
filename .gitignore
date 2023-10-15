@@ -1,2 +1,3 @@
 API_Management/node_modules
 API_Management/.env
+.gitignore
