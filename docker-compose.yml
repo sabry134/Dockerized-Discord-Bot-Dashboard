@@ -6,8 +6,6 @@ services:
       dockerfile: Dockerfile
     ports:
       - "80:80"
-    # volumes:
-    #   - ./Basic_Website:/usr/share/nginx/html
 
   api:
     build:
