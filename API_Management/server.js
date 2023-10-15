@@ -18,6 +18,9 @@ const accounts = [
   { username: 'user3', password: process.env.USER3_PASSWORD },
 ];
 
+let botIsRunning = false;
+let client = null;
+
 app.post('/login', (req, res) => {
   const { username, password } = req.body;
 
@@ -40,14 +43,24 @@ app.post('/login', (req, res) => {
   }
 });
 
-const client = new Client({ 
-  intents: [IntentsBitField.Flags.Guilds, IntentsBitField.Flags.GuildMessages] 
-});
+app.post('/start-stop-bot', (req, res) => {
+  if (botIsRunning) {
+    if (client) {
+      client.destroy();
+      client = null;
+      botIsRunning = false;
+    }
+    res.status(200).json({ message: 'Bot stopped' });
+  } else {
+    client = new Client({
+      intents: [IntentsBitField.Flags.Guilds, IntentsBitField.Flags.GuildMessages],
+    });
 
-client.login(process.env.DISCORD_BOT_TOKEN);
+    client.login(process.env.DISCORD_BOT_TOKEN);
 
-client.on('ready', () => {
-  console.log(`Logged in as ${client.user.tag}!`);
+    botIsRunning = true;
+    res.status(200).json({ message: 'Bot started' });
+  }
 });
 
 app.listen(port, () => {
