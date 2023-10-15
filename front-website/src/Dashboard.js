@@ -6,13 +6,13 @@ const Dashboard = () => {
   useEffect(() => {
     const savedBotIsRunning = localStorage.getItem('botIsRunning');
     if (savedBotIsRunning) {
-      setBotIsRunning(savedBotIsRunning === 'true');
+      setBotIsRunning(savedBotIsRunning === 'true'); // Corrected the condition
     }
   }, []);
 
   const toggleBot = async () => {
     try {
-      const response = await fetch('http://localhost:3000/start-stop-bot', {
+      const response = await fetch(`http://localhost:3000/${botIsRunning ? 'stop' : 'start'}`, {
         method: 'POST',
       });
 
@@ -35,7 +35,7 @@ const Dashboard = () => {
         <p>This is your dashboard content. You can customize it as needed.</p>
         <button
           onClick={toggleBot}
-          style={botIsRunning ? styles.discordButton : styles.discordButton}
+          style={botIsRunning ? { ...styles.discordButton, ...styles.discordButtonHover } : styles.discordButton}
         >
           {botIsRunning ? 'Stop Discord Bot' : 'Start Discord Bot'}
         </button>

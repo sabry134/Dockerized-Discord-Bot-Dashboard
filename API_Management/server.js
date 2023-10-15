@@ -43,14 +43,9 @@ app.post('/login', (req, res) => {
   }
 });
 
-app.post('/start-stop-bot', (req, res) => {
+app.post('/start', (req, res) => {
   if (botIsRunning) {
-    if (client) {
-      client.destroy();
-      client = null;
-      botIsRunning = false;
-    }
-    res.status(200).json({ message: 'Bot stopped' });
+    res.status(200).json({ message: 'Bot is already running' });
   } else {
     client = new Client({
       intents: [IntentsBitField.Flags.Guilds, IntentsBitField.Flags.GuildMessages],
@@ -59,7 +54,22 @@ app.post('/start-stop-bot', (req, res) => {
     client.login(process.env.DISCORD_BOT_TOKEN);
 
     botIsRunning = true;
+    console.log('Bot started');
     res.status(200).json({ message: 'Bot started' });
+  }
+});
+
+app.post('/stop', (req, res) => {
+  if (botIsRunning) {
+    if (client) {
+      client.destroy();
+      client = null;
+      botIsRunning = false;
+      console.log('Bot stopped');
+    }
+    res.status(200).json({ message: 'Bot stopped' });
+  } else {
+    res.status(200).json({ message: 'Bot is not running' });
   }
 });
 
