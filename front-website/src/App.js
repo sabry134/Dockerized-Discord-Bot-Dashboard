@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
 import Login from './Login';
 import Dashboard from './Dashboard';
+import Commands from './Commands';
 
 function App() {
   const [currentPage, setCurrentPage] = useState('login');
 
   const redirectToDashboard = () => {
     setCurrentPage('dashboard');
+  };
+  const redirectToCommands = () => {
+    setCurrentPage('commands');
   };
 
   return (
@@ -15,7 +19,10 @@ function App() {
         <Login loginButtonToDashboard={redirectToDashboard} />
       )}
       {currentPage === 'dashboard' && (
-        <Dashboard/>
+        <Dashboard handleCommandList={redirectToCommands} />
+      )}
+      {currentPage === 'commands' && (
+        <Commands goBackToDasboard={redirectToDashboard}/>
       )}
     </div>
   );

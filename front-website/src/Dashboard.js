@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const Dashboard = () => {
+const Dashboard = ( { handleCommandList }) => {
   const [botIsRunning, setBotIsRunning] = useState(false);
 
   useEffect(() => {
@@ -33,12 +33,20 @@ const Dashboard = () => {
       <div style={styles.discordThemed}>
         <h1>Welcome to the Dashboard</h1>
         <p>This is your dashboard content. You can customize it as needed.</p>
-        <button
-          onClick={toggleBot}
-          style={botIsRunning ? { ...styles.discordButton, ...styles.discordButtonHover } : styles.discordButton}
-        >
-          {botIsRunning ? 'Stop Discord Bot' : 'Start Discord Bot'}
-        </button>
+        <div style={styles.buttonContainer}>
+          <button
+            onClick={toggleBot}
+            style={botIsRunning ? { ...styles.discordButton, ...styles.discordButtonHover } : styles.discordButton}
+          >
+            {botIsRunning ? 'Stop Discord Bot' : 'Start Discord Bot'}
+          </button>
+          <button
+            onClick={handleCommandList}
+            style={styles.discordButton}
+          >
+            Command List
+          </button>
+        </div>
       </div>
     </div>
   );
@@ -66,9 +74,17 @@ const styles = {
     borderRadius: '5px',
     border: 'none',
     cursor: 'pointer',
+    margin: '5px', // Add margin here
+    width: '50%'
   },
   discordButtonHover: {
     backgroundColor: '#677BC4',
+  },
+  buttonContainer: {
+    display: 'flex',
+    flexDirection: 'column', // Place buttons vertically
+    alignItems: 'center', // Center align buttons
+    marginTop: '20px', // Adjust the spacing between buttons
   },
 };
 

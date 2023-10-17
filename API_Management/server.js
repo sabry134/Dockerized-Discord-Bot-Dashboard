@@ -2,7 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const dotenv = require('dotenv');
-const { Client, Intents, IntentsBitField } = require('discord.js');
+const { Client, GatewayIntentBits } = require('discord.js');
+const fs = require('fs');
 
 dotenv.config();
 
@@ -20,6 +21,8 @@ const accounts = [
 
 let botIsRunning = false;
 let client = null;
+const prefix = "!";
+module.exports = { prefix };
 
 app.post('/login', (req, res) => {
   const { username, password } = req.body;
@@ -48,8 +51,29 @@ app.post('/start', (req, res) => {
     res.status(200).json({ message: 'Bot is already running' });
   } else {
     client = new Client({
-      intents: [IntentsBitField.Flags.Guilds, IntentsBitField.Flags.GuildMessages],
+      intents: [
+        GatewayIntentBits.Guilds,
+        GatewayIntentBits.GuildMessages,
+        GatewayIntentBits.MessageContent,
+        GatewayIntentBits.DirectMessages,
+    ]
     });
+    client.on("ready", () => {
+      console.log(`Logged in as ${client.user.tag}!`)
+  })
+
+    client.on("messageCreate", msg => {
+      if (msg.content === "ping") {
+        msg.reply("pong");
+      }
+      if (msg.content === "-help") {
+          msg.reply("Here is a list of commands you can use :\n--help\n to have a list of the commands available\n ping, /chooseHouse")
+      }
+  
+      if (msg.content === "/chooseHouse") {
+          msg.reply("yes")
+      }
+  })
 
     client.login(process.env.DISCORD_BOT_TOKEN);
 
