@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import backgroundImage from './discord-image.jpg';
 
 const Login = ({ loginButtonToDashboard }) => {
   const [username, setLogin] = useState('');
@@ -32,7 +33,8 @@ const Login = ({ loginButtonToDashboard }) => {
     alignItems: 'center',
     justifyContent: 'center',
     minHeight: '100vh',
-    background: '#36393F',
+    background: `url(${backgroundImage})`, // Set the background image
+    backgroundSize: 'cover', // Optional: adjust the background size
     color: '#FFFFFF',
   };
 

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import backgroundImage from './discord-image.jpg';
 
 const Dashboard = ( { handleCommandList }) => {
   const [botIsRunning, setBotIsRunning] = useState(false);
@@ -6,7 +7,7 @@ const Dashboard = ( { handleCommandList }) => {
   useEffect(() => {
     const savedBotIsRunning = localStorage.getItem('botIsRunning');
     if (savedBotIsRunning) {
-      setBotIsRunning(savedBotIsRunning === 'true'); // Corrected the condition
+      setBotIsRunning(savedBotIsRunning === 'true');
     }
   }, []);
 
@@ -58,7 +59,8 @@ const styles = {
     justifyContent: 'center',
     alignItems: 'center',
     height: '100vh',
-    background: '#36393F',
+    background: `url(${backgroundImage})`,
+    backgroundSize: 'cover',
   },
   discordThemed: {
     backgroundColor: '#2C2F33',
@@ -82,9 +84,9 @@ const styles = {
   },
   buttonContainer: {
     display: 'flex',
-    flexDirection: 'column', // Place buttons vertically
-    alignItems: 'center', // Center align buttons
-    marginTop: '20px', // Adjust the spacing between buttons
+    flexDirection: 'column',
+    alignItems: 'center',
+    marginTop: '20px',
   },
 };
 
