@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import backgroundImage from './discord-image.jpg';
 
-const Dashboard = ( { handleCommandList }) => {
+const Dashboard = ( { handleWebhookManager, handleSettings }) => {
   const [botIsRunning, setBotIsRunning] = useState(false);
 
   useEffect(() => {
@@ -42,10 +42,16 @@ const Dashboard = ( { handleCommandList }) => {
             {botIsRunning ? 'Stop Discord Bot' : 'Start Discord Bot'}
           </button>
           <button
-            onClick={handleCommandList}
+            onClick={handleWebhookManager}
             style={styles.discordButton}
           >
-            Command List
+            Webhook Manager
+          </button>
+          <button
+            onClick={handleSettings}
+            style={styles.discordButton}
+          >
+            Settings
           </button>
         </div>
       </div>

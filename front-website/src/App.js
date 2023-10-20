@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import Login from './Login';
 import Dashboard from './Dashboard';
-import Commands from './Commands';
+import Webhook from './Webhook';
+import Settings from './Settings';
 
 function App() {
   const [currentPage, setCurrentPage] = useState('login');
@@ -10,7 +11,10 @@ function App() {
     setCurrentPage('dashboard');
   };
   const redirectToCommands = () => {
-    setCurrentPage('commands');
+    setCurrentPage('webhook');
+  };
+  const redirectToSettings = () => {
+    setCurrentPage('settings');
   };
 
   return (
@@ -19,10 +23,13 @@ function App() {
         <Login loginButtonToDashboard={redirectToDashboard} />
       )}
       {currentPage === 'dashboard' && (
-        <Dashboard handleCommandList={redirectToCommands} />
+        <Dashboard handleWebhookManager={redirectToCommands} handleSettings={redirectToSettings}/>
       )}
-      {currentPage === 'commands' && (
-        <Commands goBackToDasboard={redirectToDashboard}/>
+      {currentPage === 'webhook' && (
+        <Webhook goBackToDashboard={redirectToDashboard}/>
+      )}
+      {currentPage === 'settings' && (
+        <Settings goBackToDashboard={redirectToDashboard}/>
       )}
     </div>
   );
