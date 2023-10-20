@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import backgroundImage from './discord-image.jpg';
 
 const Webhook = ({ goBackToDashboard }) => {
-    const [webhookUrl, setWebhookUrl] = useState('');
+    const [webhookUrl, setWebhookUrl] = useState(localStorage.getItem('webhookUrl') || ''); // Load the URL from local storage if available
     const [message, setMessage] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const [isMessageSent, setIsMessageSent] = useState(false);
+    const [isUrlSaved, setIsUrlSaved] = useState(false); // State for URL saved message
 
     const isValidWebhookUrl = (url) => {
         // Regular expression to match a valid Discord Webhook URL
@@ -13,9 +14,14 @@ const Webhook = ({ goBackToDashboard }) => {
         return regex.test(url);
     };
 
+    useEffect(() => {
+        // Save the URL to local storage whenever it changes
+        localStorage.setItem('webhookUrl', webhookUrl);
+    }, [webhookUrl]);
+
     const executeCommand = () => {
         if (!isValidWebhookUrl(webhookUrl)) {
-            setErrorMessage('Invalid mentioned URL');
+            setErrorMessage('Invalid URL');
             setTimeout(() => setErrorMessage(''), 3000);
             return;
         }
@@ -38,6 +44,17 @@ const Webhook = ({ goBackToDashboard }) => {
             });
     };
 
+    const saveWebhookUrl = () => {
+        if (!isValidWebhookUrl(webhookUrl)) {
+            setErrorMessage('Invalid URL');
+            setTimeout(() => setErrorMessage(''), 3000);
+            return;
+        }
+
+        setIsUrlSaved(true);
+        setTimeout(() => setIsUrlSaved(false), 3000);
+    };
+
     return (
         <div style={styles.body}>
             <div style={styles.backButtonContainer}>
@@ -53,29 +70,40 @@ const Webhook = ({ goBackToDashboard }) => {
                 {isMessageSent && (
                     <div style={styles.successMessage}>Message Sent!</div>
                 )}
+                {isUrlSaved && (
+                    <div style={styles.urlSavedMessage}>URL saved</div>
+                )}
                 <div style={styles.inputContainer}>
-                    <input
-                        type="text"
-                        placeholder="Discord Webhook URL"
-                        value={webhookUrl}
-                        onChange={(e) => setWebhookUrl(e.target.value)}
-                        style={styles.input}
-                    />
-                    <input
-                        type="text"
-                        placeholder="Message"
-                        value={message}
-                        onChange={(e) => setMessage(e.target.value)}
-                        style={styles.input}
-                    />
-                    <button onClick={executeCommand} style={styles.button}>
-                        Send Message
-                    </button>
+                    <div style={styles.inputGroup}>
+                        <input
+                            type="text"
+                            placeholder="Discord Webhook URL"
+                            value={webhookUrl}
+                            onChange={(e) => setWebhookUrl(e.target.value)}
+                            style={styles.input}
+                        />
+                        <button onClick={saveWebhookUrl} style={styles.button}>
+                            Save
+                        </button>
+                    </div>
+                    <div style={styles.inputGroup}>
+                        <input
+                            type="text"
+                            placeholder="Message"
+                            value={message}
+                            onChange={(e) => setMessage(e.target.value)}
+                            style={styles.input}
+                        />
+                        <button onClick={executeCommand} style={styles.button}>
+                            Send
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
     );
 };
+
 
 const styles = {
     body: {
@@ -147,6 +175,13 @@ const styles = {
         border: 'none',
         cursor: 'pointer',
         marginTop: '20px',
+    },
+    urlSavedMessage: {
+        backgroundColor: 'green',
+        color: 'white',
+        padding: '10px',
+        borderRadius: '5px',
+        marginBottom: '10px',
     },
 };
 
